@@ -260,7 +260,7 @@ function atualizarCarrinho() {
                 <div class="card mb-3 border-0 shadow-sm">
                     <div class="row g-0 align-items-center p-2">
                         <div class="col-4">
-                            <img src="http://localhost:3000/${item.imagem}" class="img-fluid rounded" alt="${item.nome}">
+                            <img src="https://magazine-pedro.onrender.com/${item.imagem}" class="img-fluid rounded" alt="${item.nome}">
                         </div>
                         <div class="col-8">
                             <div class="card-body py-0">

@@ -1,4 +1,4 @@
-require('dotenv').config(); // SEMPRE NA LINHA 1
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
@@ -11,41 +11,30 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Configuração da conexão (Igual ao seu, mas agora garantimos que process.env existe)
-
-
+// Conexão com o Banco
 const db = mysql.createConnection({
-
     host: process.env.MYSQLHOST,
     user: process.env.MYSQLUSER,
     password: process.env.MYSQLPASSWORD,
     database: process.env.MYSQLDATABASE,
     port: process.env.MYSQLPORT || 3306
-    
 }); 
 
 db.connect((err) => {
     if (err) {
-        console.error('Erro ao conectar ao banco da nuvem:', err);
+        console.error('Erro ao conectar ao banco:', err);
         return;
     }
-    console.log('Conectado com sucesso ao MySQL no Clever Cloud!');
+    console.log('Conectado ao MySQL no Clever Cloud!');
 });
 
-// --- ROTA PARA SERVIR O FRONTEND NO RENDER ---
-// Isso vai fazer seu site abrir quando você acessar o link do Render
+// --- SERVIR ARQUIVOS ESTÁTICOS ---
+// Servir a pasta IMG (que está na raiz do projeto, fora da pasta backend)
+app.use('/IMG', express.static(path.join(__dirname, '../IMG')));
+// Servir o Frontend
 app.use(express.static(path.join(__dirname, '../'))); 
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../index.html'));
-});
-
-// ... (Restante das suas rotas de cadastro, login e produtos)
-
-// --- CONFIGURAÇÃO DE ARQUIVOS (MULTER & STATIC) ---
-
-app.use('/IMG', express.static(path.join(__dirname, '../IMG')));
-
+// Configuração do Multer para salvar na pasta IMG da raiz
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const dir = path.join(__dirname, '../IMG'); 
@@ -56,16 +45,18 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + path.extname(file.originalname));
     }
 });
-
 const upload = multer({ storage });
 
-// --- ROTAS DE AUTENTICAÇÃO ---
+// --- ROTAS ---
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../index.html'));
+});
 
 app.post("/cadastro", async (req, res) => {
     const { email, senha } = req.body;
     try {
         const hash = await bcrypt.hash(senha, 10);
-        // Colocamos 'user' entre aspas simples na query SQL
         const sql = "INSERT INTO usuarios (email, senha, tipo) VALUES (?, ?, 'user')";
         db.query(sql, [email, hash], (err) => {
             if (err) return res.status(500).json({ error: "Erro ao cadastrar" });
@@ -77,29 +68,14 @@ app.post("/cadastro", async (req, res) => {
 app.post("/login", (req, res) => {
     const { email, senha } = req.body;
     const sql = "SELECT * FROM usuarios WHERE email = ?";
-    
     db.query(sql, [email], async (err, results) => {
         if (err) return res.status(500).json({ error: "Erro no banco" });
         if (results.length === 0) return res.status(401).json({ error: "Usuário não encontrado" });
-
-        // LOGS PARA DEBUG
         const match = await bcrypt.compare(senha, results[0].senha);
-        console.log("--- TENTATIVA DE LOGIN ---");
-        console.log("Senha digitada:", senha);
-        console.log("Hash no banco:", results[0].senha);
-        console.log("Bateu?", match);
-
         if (!match) return res.status(401).json({ error: "Senha incorreta" });
-
-        res.json({ 
-            message: "Logado!", 
-            tipo: results[0].tipo 
-        });
+        res.json({ message: "Logado!", tipo: results[0].tipo });
     });
 });
-
-
-// --- ROTAS DE PRODUTOS ---
 
 app.get('/produtos', (req, res) => {
     db.query('SELECT * FROM produtos', (err, results) => {
@@ -110,11 +86,15 @@ app.get('/produtos', (req, res) => {
 
 app.post('/produtos', upload.single('imagem_arquivo'), (req, res) => {
     const { nome, preco } = req.body;
+    // IMPORTANTE: Salvamos apenas 'IMG/nome-do-arquivo.jpg'
     const imagem_url = req.file ? `IMG/${req.file.filename}` : 'IMG/default.jpg';
+    
+    console.log("Salvando produto com imagem:", imagem_url);
+
     const sql = 'INSERT INTO produtos (nome, preco, imagem_url) VALUES (?, ?, ?)';
     db.query(sql, [nome, preco, imagem_url], (err) => {
         if (err) return res.status(500).json({ error: "Erro ao salvar produto" });
-        res.json({ message: "Salvo com sucesso!" });
+        res.json({ message: "Salvo com sucesso!", url: imagem_url });
     });
 });
 
@@ -135,4 +115,6 @@ app.put('/produtos/:id', (req, res) => {
     });
 });
 
-app.listen(3000, () => console.log("Servidor rodando na porta 3000"));
+// AJUSTE DE PORTA PARA O RENDER
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
