@@ -1,0 +1,197 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+
+/* ADMINS */
+
+.admin-only {
+  display: none !important;
+}
+
+
+
+
+
+
+body {
+  padding-top: 7rem;
+  font-family: "Oswald",Arial, Helvetica, sans-serif;
+
+  display: flex;
+  flex-direction: column; 
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* Header */
+
+.navbar {
+  background-color: #0075E2;
+  height: 3rem;
+}
+
+
+.sub-header {
+  top: 3rem;
+  z-index: 1020;
+
+  background-color: #0075E2; 
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+  min-height: 4rem; 
+
+  border-bottom:  1px solid #050505;;
+}
+
+/* Cards */
+
+.card {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+
+.btn {
+  background-color: #0075E2;
+  outline: none;
+  border: none;
+}
+
+.btn:focus {
+  background-color: #00529f;
+}
+
+.btn:hover {
+    background-color: #00529f;
+}
+
+/* carrinho */
+
+.btn-carrinho {
+ background-color: #212529;
+  outline: none;
+  border: none;
+}
+
+.btn-carrinho:focus {
+ background-color: #28354f;
+}
+
+.btn-carrinho:hover {
+ background-color: #28354f;
+}
+
+.btn-comprar {
+  background-color: #CC0000;
+}
+
+.btn-comprar:focus {
+   background-color: #850000;
+}
+
+.btn-comprar:hover {
+   background-color: #850000;
+}
+
+/* Forms */
+
+#formProduto{
+  padding: 3.5rem 2.5rem;
+}
+
+/* Inputs */
+
+#formProduto .form-control:focus {
+  border-color: transparent;
+  box-shadow: none; 
+  outline: 0;
+}
+
+.form-control {
+  border: none;
+  background-color: #F2F2F2;
+}
+
+
+.form-control:hover {
+  border: none;
+  background-color: #e4e3e3;
+  transition: all ease-in 0.2s;
+}
+
+
+.form-control:focus {
+  border: none;
+  background-color: #e4e3e3;
+  transition: all ease-in 0.2s;
+}
+
+.form-control::placeholder {
+  color:#9d9895
+}
+
+/* Botão e link */
+
+.btn-delete {
+  background-color: #CC0000;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #850000;
+  transition: all ease-in 0.2s;
+  color: white;
+}
+
+.btn-delete:focus {
+  background-color: #850000;
+  transition: all ease-in 0.2s;
+  color: white;
+}
+
+.btn-edit {
+  background-color: #0B5ED7;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #002a85;
+  transition: all ease-in 0.2s;
+  color: white;
+}
+
+.btn-edit:focus {
+  background-color: #002a85;
+  transition: all ease-in 0.2s;
+  color: white;
+}
+
+/* form de edição */
+
+
+/* Alvo: A camada de fundo que o Bootstrap cria (.modal-backdrop) */
+.modal-backdrop.show {
+    /* 1. O efeito de desfoque (Blur) */
+    backdrop-filter: blur(8px); /* Aumente ou diminua o 8px para mais ou menos desfoque */
+    -webkit-backdrop-filter: blur(8px); /* Suporte para Safari */
+    
+    /* 2. O escurecimento do fundo (opcional, mas ajuda no contraste) */
+    background-color: rgba(0, 0, 0, 0.6); /* Preto com 60% de opacidade */
+}
+
+/* Opcional: Animação mais suave para o desfoque */
+.modal-backdrop {
+    transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+}
+
+/* Opcional: Estilizar o formulário para parecer que está flutuando */
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.95); /* Branco quase opaco */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}

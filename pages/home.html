@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MagazinePedro</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/html.css">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top shadow">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-white" href="#">MAGAZINEPEDRO</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="about.html">Sobre nós</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link text-white" href="#" onclick="logout()">Sair</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sub-header shadow-sm d-flex align-items-center fixed-top">
+    <div class="container">
+      <h1 class="  text-white text-center fs-4 m-0">CATÁLOGO</h1>
+    </div>
+  </div>
+
+  <div class="container mt-5 pt-5 admin-only">
+    <div class="d-flex justify-content-center mb-4">
+      <button class="btn btn-dark shadow-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false">
+        Adicionar produto
+        
+      </button>
+    </div>
+
+    <div class="collapse" id="collapseForm">
+      <div class="d-flex justify-content-center align-items-center mb-5">
+        <form id="formProduto" class="shadow rounded bg-white p-4 forms-login" style="width: 100%; max-width: 400px;">
+          <h3 class="text-center mb-3">Nova Moto</h3>
+          
+          <div class="mb-3">
+            <label class="form-label">Nome da Moto</label>
+            <input type="text" id="nome" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Preço</label>
+            <input type="number" step="0.01" id="preco" class="form-control" required>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Foto do automóvel</label>
+            <input type="file" id="imagem_arquivo" class="form-control" accept="image/*">
+          </div>
+
+          <button type="submit" class="btn btn-comprar only-admin w-100 text-white">Salvar no Catálogo</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="container my-5"> 
+    <div class="row" id="container-produtos"> 
+      </div>
+  </div>
+
+  <footer class="bg-dark text-secondary py-4 mt-auto">
+    <div class="container text-center">
+      <h3 class="border-bottom border-secondary pb-3 mb-3">MAGAZINE PEDRO</h3>
+      <p class="m-0">© 2026 MAGAZINE PEDRO, Inc</p>
+    </div>
+  </footer>
+
+  <div class="modal fade" id="modalEditarProduto" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered"> <div class="modal-content shadow-lg border-0 rounded-4"> <div class="modal-header bg-dark text-white rounded-top-4">
+        <h5 class="modal-title fw-bold">EDITAR MOTO</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body p-4">
+        <form id="formEditarProduto">
+          <input type="hidden" id="edit-id">
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold text-dark">Nome da Moto</label>
+            <input type="text" id="edit-nome" class="form-control" required>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold text-dark">Preço (R$)</label>
+            <input type="number" step="0.01" id="edit-preco" class="form-control" required>
+          </div>
+          
+          <div class="d-flex gap-2 mt-4">
+            <button type="button" class="btn btn-outline-dark w-50 text-white" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-dark w-50">Salvar Alterações</button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="position-fixed top-0 end-0 p-1 px-4" style="z-index: 1060; margin-top: 60px;">
+  <button class="btn text-white btn-carrinho position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#carrinhoLateral">
+    <i class="bi bi-cart"></i> Carrinho
+    <span id="carrinho-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+      0
+    </span>
+  </button>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="carrinhoLateral">
+  <div class="offcanvas-header bg-dark text-white">
+    <h5 class="offcanvas-title">MEU CARRINHO</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column">
+    <div id="itens-carrinho" class="flex-grow-1">
+      <p class="text-center text-muted">Seu carrinho está vazio.</p>
+    </div>
+    
+    <div class="border-top pt-3">
+      <div class="d-flex justify-content-between mb-3">
+        <span class="fw-bold">TOTAL:</span>
+        <span id="total-carrinho" class="fw-bold fs-5">R$ 0,00</span>
+      </div>
+      <button class="btn btn-dark w-100 btn-comprar">Finalizar Compra</button>
+    </div>
+  </div>
+</div>
+
+  <script src="../js/home.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

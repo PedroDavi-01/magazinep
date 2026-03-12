@@ -1,0 +1,73 @@
+
+body {
+  background-color: #0075E2;
+}
+
+
+.container {
+  background-color: #ffffff;
+}
+
+/* Forms */
+
+
+/* Inputs */
+
+.form-control {
+  border: none;
+  background-color: #e9e8e8;
+}
+
+
+.form-control:hover {
+  border: none;
+  background-color: #e0dfdf;
+  transition: all ease-in 0.2s;
+}
+
+
+.form-control:focus {
+  border: none;
+  box-shadow: none;
+  background-color: #e0dfdf;
+  transition: all ease-in 0.2s;
+
+}
+
+.form-control::placeholder {
+  color:#9d9895
+}
+
+/* Botão e link */
+
+/* Customizando a caixa do checkbox */
+#checkPrivacy.form-check-input {
+    border: 2px solid #0075E2; /* Borda grossa e na sua cor principal */
+    cursor: pointer;
+}
+
+/* Quando estiver marcado (Preenchimento) */
+#checkPrivacy.form-check-input:checked {
+    background-color: #0075E2; /* Fundo azul vivo */
+    border-color: #0075E2;
+}
+
+.btn {
+  background-color: #0075E2;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #005BB0;
+  transition: all ease-in 0.2s;
+  color: white;
+}
+
+.underlink {
+  color: #212529;
+}
+
+.underlink:hover {
+  color: #005BB0;
+  transition: all ease-in 0.2s;
+}
