@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Carregamento do catálogo
 async function carregarCatalogo() {
     try {
-        const response = await fetch('http://localhost:3000/produtos');
+        const response = await fetch('https://magazine-pedro.onrender.com/produtos');
         const produtos = await response.json();
         
         container.innerHTML = ''; 
@@ -128,7 +128,7 @@ form.addEventListener('submit', async (event) => {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/produtos', {
+        const response = await fetch('https://magazine-pedro.onrender.com/produtos', {
             method: 'POST',
             body: formData 
         });
@@ -156,7 +156,7 @@ async function excluirProduto(id) {
 
     if(resultado.isConfirmed) {
         try {
-            const response = await fetch(`http://localhost:3000/produtos/${id}`, {
+            const response = await fetch(`https://magazine-pedro.onrender.com/produtos/${id}`, {
                 method: 'DELETE'
             });
 
@@ -180,7 +180,7 @@ async function editarProduto(id) {
 
     if(resultado.isConfirmed) {
         try {
-            const response = await fetch(`http://localhost:3000/produtos`);
+            const response = await fetch(`https://magazine-pedro.onrender.com/produtos`);
             const produtos = await response.json();
             const produtoEncontrado = produtos.find(p => p.id === id);
 
@@ -207,7 +207,7 @@ document.getElementById('formEditarProduto').addEventListener('submit', async (e
     };
 
     try {
-        const response = await fetch(`http://localhost:3000/produtos/${id}`, {
+        const response = await fetch(`https://magazine-pedro.onrender.com/produtos/${id}`, {
             method: 'PUT',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(dadosAtualizados)
