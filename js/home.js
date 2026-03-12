@@ -100,7 +100,7 @@ async function carregarCatalogo() {
             container.innerHTML += `
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100 shadow-sm">
-                        <img src="http://localhost:3000/${produto.imagem_url}" class="card-img-top" alt="${produto.nome}" style="height: 200px; object-fit: cover;">
+                        <img src="https://magazine-pedro.onrender.com/${produto.imagem_url}" class="card-img-top" alt="${produto.nome}" style="height: 200px; object-fit: cover;">
                         <div class="card-body">
                             <h5 class="card-title text-uppercase">${produto.nome}</h5>
                             <p class="fw-bold text-dark fs-5">${precoFormatado}</p>
